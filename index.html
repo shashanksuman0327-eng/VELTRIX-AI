@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VELTRIX AI – Autonomous Intelligence For Modern Enterprises</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+:root{color-scheme:dark;--bg:#03050b;--panel:rgba(255,255,255,.07);--line:rgba(255,255,255,.14);--text:#f7f8ff;--muted:#a8b0c4;--cyan:#67e8f9;--violet:#a78bfa;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 20% 0,#152050 0,transparent 30rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+
+/* NAV */
+.nav-shell{position:sticky;top:0;z-index:10;padding:14px 5vw;backdrop-filter:blur(22px);background:linear-gradient(to bottom,rgba(3,5,11,.82),rgba(3,5,11,.45));border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-weight:800;letter-spacing:.08em}
+.brand span{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#050712;margin-right:6px}
+.nav-links{display:flex;gap:24px;color:var(--muted);font-size:14px}
+.nav-links a{position:relative}
+.nav-links a:after{content:"";position:absolute;inset:auto 0 -8px;height:1px;transform:scaleX(0);background:var(--cyan);transition:transform .18s ease-out}
+.nav-links a:hover:after{transform:scaleX(1)}
+.nav-cta,.btn{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:var(--panel);transition:transform .18s ease-out,border-color .18s ease-out;cursor:pointer;display:inline-block}
+.nav-cta:hover,.btn:hover{transform:translate3d(0,-2px,0);border-color:rgba(103,232,249,.55)}
+
+/* HERO */
+.hero{min-height:820px;padding:130px 5vw 80px;display:grid;grid-template-columns:1fr minmax(320px,560px);align-items:center;gap:48px;position:relative;overflow:hidden}
+.glow-field:before{content:"";position:absolute;inset:0;background:radial-gradient(520px circle at var(--mx,50%) var(--my,30%),rgba(103,232,249,.16),transparent 45%);pointer-events:none;transition:background .1s}
+.aurora{position:absolute;inset:8% 5% auto;height:420px;filter:blur(48px);opacity:.65;background:conic-gradient(from 180deg,var(--cyan),#7c3aed,#ec4899,var(--cyan));animation:float 9s ease-in-out infinite;border-radius:50%;z-index:0}
+.hero-copy{position:relative;z-index:1}
+.eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:800;margin:0 0 16px}
+h1,h2{letter-spacing:-.06em;line-height:.92;margin:0}
+h1{font-size:clamp(48px,9vw,100px);margin-bottom:20px}
+h2{font-size:clamp(32px,5vw,64px);max-width:850px}
+.hero-text{color:var(--muted);font-size:clamp(16px,2vw,20px);line-height:1.7;max-width:680px;margin:20px 0 32px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.primary{background:linear-gradient(135deg,#fff,var(--cyan));color:#02040a;font-weight:800}
+.secondary{background:rgba(255,255,255,.06)}
+
+/* DASHBOARD MOCK */
+.dashboard-mock{height:520px;padding:24px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px);border-radius:32px;position:relative}
+.mock-top{margin-bottom:16px}
+.mock-top span{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--line);margin-right:7px}
+.chart{height:250px;display:flex;align-items:end;gap:16px;margin-top:30px}
+.chart i{flex:1;border-radius:999px;background:linear-gradient(var(--cyan),var(--violet));animation:rise 3s ease-in-out infinite alternate;display:block}
+.chart i:nth-child(1){height:65%}
+.chart i:nth-child(2){height:55%;animation-delay:.3s}
+.chart i:nth-child(3){height:85%;animation-delay:.6s}
+.chart i:nth-child(4){height:45%;animation-delay:.9s}
+.chart i:nth-child(5){height:75%;animation-delay:1.2s}
+.float-card{position:absolute;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(5,8,18,.82)}
+.float-card b{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+.float-card strong{display:block;font-size:28px;font-weight:900}
+.float-card em{font-size:12px;color:#22c55e;font-style:normal}
+.one{top:80px;right:20px}
+.two{bottom:32px;left:20px}
+.orbital{position:absolute;right:30px;bottom:30px;width:160px;stroke:rgba(103,232,249,.45);fill:none;animation:spin 18s linear infinite}
+
+/* SECTIONS */
+.section{padding:100px 5vw;max-width:1280px;margin:auto}
+.section p.eyebrow{margin-bottom:12px}
+.section h2{margin-bottom:16px}
+.section > p{color:var(--muted);font-size:clamp(16px,2vw,20px);line-height:1.7;max-width:680px;margin-bottom:40px}
+
+/* BENTO */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:16px;margin-top:34px}
+.bento-card{text-align:left;color:var(--text);padding:24px;transition:transform .18s ease-out,border-color .18s ease-out;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px);border-radius:32px;display:flex;flex-direction:column;gap:6px;border:none;width:100%}
+.bento-card span{font-size:22px}
+.bento-card h3{font-size:20px;margin:0;letter-spacing:-.03em}
+.bento-card p{font-size:13px;color:var(--muted);margin:0;line-height:1.5;flex:1}
+.bento-card strong{font-size:32px;font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.bento-card.active,.bento-card:hover{transform:translate3d(0,-6px,0);border:1px solid var(--accent,var(--cyan));box-shadow:0 0 60px color-mix(in srgb,var(--accent,var(--cyan)),transparent 70%)}
+.card-1,.card-5{grid-column:span 2}
+.card-3{grid-row:span 2}
+
+/* ACCORDION (mobile) */
+.accordion{display:grid;gap:12px;margin-top:28px}
+.acc-item{background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.acc-item button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:20px;color:var(--text);background:transparent;border:0;cursor:pointer;text-align:left}
+.acc-item button span{font-weight:700}
+.acc-item button b{color:var(--cyan);white-space:nowrap;margin-left:12px}
+.acc-panel{padding:0 20px 20px;color:var(--muted);line-height:1.6}
+
+/* INTELLIGENCE SPLIT */
+.split{display:grid;grid-template-columns:1fr 1.1fr;gap:42px;align-items:center}
+.ops{padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px);border-radius:32px}
+.health{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.health span{color:var(--muted);font-size:14px}
+.health b{font-size:44px;font-weight:900;letter-spacing:-.04em;color:#22c55e}
+.bars{height:160px;display:flex;align-items:end;gap:10px;margin-bottom:20px}
+.bars i{flex:1;border-radius:999px;background:linear-gradient(var(--cyan),var(--violet));animation:rise 3s ease-in-out infinite alternate;display:block}
+.bars i:nth-child(1){height:72%}
+.bars i:nth-child(2){height:44%;animation-delay:.2s}
+.bars i:nth-child(3){height:88%;animation-delay:.4s}
+.bars i:nth-child(4){height:61%;animation-delay:.6s}
+.bars i:nth-child(5){height:95%;animation-delay:.8s}
+.bars i:nth-child(6){height:54%;animation-delay:1s}
+.ops ol{padding-left:0;margin:0;list-style:none}
+.ops li{margin:10px 0;color:var(--muted);font-size:14px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.04);display:flex;align-items:center;gap:8px}
+.ops li:before{content:"▸";color:var(--cyan);font-size:10px}
+
+/* PRICING */
+.pricing-controls{display:flex;justify-content:space-between;gap:16px;margin:28px 0;flex-wrap:wrap;align-items:center}
+.pricing-controls select{background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--text);padding:10px 16px;cursor:pointer}
+.toggle{background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--text);padding:4px;display:flex}
+.toggle button{border:0;border-radius:999px;background:transparent;color:var(--muted);padding:10px 16px;cursor:pointer;transition:.18s}
+.toggle .on{background:#fff;color:#02040a;font-weight:700}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.plan{padding:28px;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px);border-radius:32px}
+.plan h3{margin:0 0 4px;font-size:22px;font-weight:800}
+.plan > p{color:var(--muted);font-size:13px;margin:0 0 16px}
+.plan.featured{border-color:rgba(103,232,249,.65);transform:translateY(-10px)}
+.price{font-size:48px;font-weight:900;letter-spacing:-.04em;display:block}
+.plan small{color:var(--muted);font-size:12px;display:block;margin-bottom:20px}
+.plan ul{list-style:none;padding:0;margin:0 0 24px}
+.plan li{margin:12px 0;color:var(--muted);font-size:14px;display:flex;align-items:center;gap:8px}
+.plan li:before{content:"✓";color:var(--cyan);font-weight:900}
+
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.testimonials article{padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);box-shadow:0 30px 100px rgba(0,0,0,.45);backdrop-filter:blur(20px);border-radius:32px;transition:transform .18s ease-out}
+.testimonials article:hover{transform:translate3d(0,-5px,0)}
+.avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--violet),var(--cyan));color:#050712;font-weight:900;margin-bottom:16px;font-size:20px}
+.testimonials article p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 16px;font-style:italic}
+.testimonials article b{display:block;font-size:15px;font-weight:800}
+.testimonials article span{color:var(--muted);font-size:12px}
+
+/* FAQ */
+.faq details{padding:22px;margin:12px 0;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.045));border:1px solid var(--line);border-radius:24px}
+.faq summary{cursor:pointer;font-weight:800;outline:none;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-size:20px;color:var(--cyan)}
+.faq details[open] summary:after{content:"−"}
+.faq details p{color:var(--muted);line-height:1.6;margin:14px 0 0}
+
+/* FOOTER */
+.footer{padding:60px 5vw;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;background:#020309}
+.footer p,.footer a{color:var(--muted);font-size:14px}
+.footer a:hover{color:var(--cyan)}
+.footer .brand{font-size:18px;display:block;margin-bottom:12px}
+.footer form label{display:block;font-weight:700;margin-bottom:12px;font-size:14px}
+.footer form div{display:flex;gap:8px}
+.footer input{min-width:0;flex:1;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:12px 16px;color:var(--text)}
+.footer form .btn{border:0;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#02040a;font-weight:800;padding:12px 18px}
+.footer nav{display:grid;gap:8px}
+.footer nav a{display:block}
+
+/* ANIMATIONS */
+@keyframes float{50%{transform:translate3d(0,30px,0) scale(1.05)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rise{from{height:30%}to{height:100%}}
+
+/* RESPONSIVE */
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero,.split{grid-template-columns:1fr}
+  .hero{padding-top:90px}
+  .plans,.testimonials,.footer{grid-template-columns:1fr}
+  .plan.featured{transform:none}
+  .bento{grid-template-columns:1fr 1fr}
+  .card-1,.card-5{grid-column:span 1}
+  .card-3{grid-row:span 1}
+}
+@media(max-width:767px){
+  .section{padding:72px 20px}
+  .hero{min-height:auto;padding:82px 20px 56px}
+  .dashboard-mock{height:380px}
+  .pricing-controls{flex-direction:column;align-items:stretch}
+  .health b,.price{font-size:36px}
+  .bento{display:none}
+  .accordion-section{display:block!important}
+  .bento-section{display:none!important}
+}
+.accordion-section{display:none}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<header class="nav-shell">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="#top" aria-label="VELTRIX AI home"><span>V</span> VELTRIX AI</a>
+    <div class="nav-links">
+      <a href="#platform">Platform</a>
+      <a href="#intelligence">Intelligence</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#customers">Customers</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="nav-cta" href="#pricing">Request access</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="top" class="hero glow-field" aria-labelledby="hero-title">
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">Built for the Next Generation of Enterprise AI.</p>
+    <h1 id="hero-title">Autonomous Intelligence For Modern Enterprises</h1>
+    <p class="hero-text">VELTRIX AI connects your data, deploys governed agents, and automates critical operations with real-time observability.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#pricing">Deploy agents</a>
+      <a class="btn secondary" href="#intelligence">Watch platform</a>
+    </div>
+  </div>
+  <div class="dashboard-mock" aria-label="Animated dashboard preview">
+    <div class="mock-top"><span></span><span></span><span></span></div>
+    <div class="chart">
+      <i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="float-card one"><b>Agent throughput</b><strong>12.8k</strong><em>+34%</em></div>
+    <div class="float-card two"><b>Risk drift</b><strong>0.04%</strong><em>stable</em></div>
+    <svg class="orbital" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="70"/>
+      <path d="M40 100c35-55 85-55 120 0-35 55-85 55-120 0Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- PLATFORM / FEATURE BENTO -->
+<section id="platform" class="section" aria-labelledby="features-title">
+  <p class="eyebrow">Platform</p>
+  <h2 id="features-title">A composable AI operating layer.</h2>
+
+  <!-- Desktop Bento -->
+  <div class="bento bento-section" id="bento-grid">
+    <!-- cards injected by JS -->
+  </div>
+
+  <!-- Mobile Accordion -->
+  <div class="accordion accordion-section" id="accordion-grid">
+    <!-- items injected by JS -->
+  </div>
+</section>
+
+<!-- INTELLIGENCE -->
+<section id="intelligence" class="section split" aria-labelledby="dash-title">
+  <div>
+    <p class="eyebrow">Intelligence</p>
+    <h2 id="dash-title">A live command center for autonomous operations.</h2>
+    <p>Monitor agent decisions, workflow latency, automation status, and system health from one executive-grade surface.</p>
+  </div>
+  <div class="ops">
+    <div class="health"><span>System health</span><b>99.99%</b></div>
+    <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <ol>
+      <li>Ingested Snowflake updates</li>
+      <li>Agent resolved 284 tickets</li>
+      <li>Finance workflow awaiting approval</li>
+      <li>Security policy sync complete</li>
+    </ol>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section pricing" aria-labelledby="pricing-title">
+  <p class="eyebrow">Pricing</p>
+  <h2 id="pricing-title">Dynamic pricing for every stage.</h2>
+  <div class="pricing-controls">
+    <select id="currency-select" aria-label="Currency">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="INR">INR</option>
+    </select>
+    <div class="toggle" role="group" aria-label="Billing cycle">
+      <button id="monthly-btn" onclick="setBilling('monthly')">Monthly</button>
+      <button id="annual-btn" class="on" onclick="setBilling('annual')">Annual · save 20%</button>
+    </div>
+  </div>
+  <div class="plans" id="plans-grid"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="customers" class="section" aria-labelledby="testimonials-title">
+  <p class="eyebrow">Customers</p>
+  <h2 id="testimonials-title">Trusted by teams moving faster with control.</h2>
+  <div class="testimonials">
+    <article>
+      <div class="avatar">N</div>
+      <p>"VELTRIX gives our operators AI leverage without sacrificing governance, auditability, or brand trust."</p>
+      <b>Northstar Bank</b><span>VP of Operations</span>
+    </article>
+    <article>
+      <div class="avatar">A</div>
+      <p>"VELTRIX gives our operators AI leverage without sacrificing governance, auditability, or brand trust."</p>
+      <b>Aster Cloud</b><span>VP of Operations</span>
+    </article>
+    <article>
+      <div class="avatar">M</div>
+      <p>"VELTRIX gives our operators AI leverage without sacrificing governance, auditability, or brand trust."</p>
+      <b>Meridian Labs</b><span>VP of Operations</span>
+    </article>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section faq" aria-labelledby="faq-title">
+  <p class="eyebrow">FAQ</p>
+  <h2 id="faq-title">Enterprise answers, without ambiguity.</h2>
+  <details>
+    <summary>How are agents governed?</summary>
+    <p>Policies, permissions, approvals, and audit logs are enforced at every agent action.</p>
+  </details>
+  <details>
+    <summary>Can VELTRIX connect to our data?</summary>
+    <p>Yes. VELTRIX ships connectors for warehouses, CRMs, ticketing, docs, and internal APIs.</p>
+  </details>
+  <details>
+    <summary>Is deployment cloud-only?</summary>
+    <p>VELTRIX supports managed cloud, private cloud, and dedicated enterprise environments.</p>
+  </details>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer" class="footer">
+  <div>
+    <a class="brand" href="#top"><span style="display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#050712;font-weight:900;margin-right:6px;vertical-align:middle">V</span> VELTRIX AI</a>
+    <p>Built for the Next Generation of Enterprise AI.</p>
+  </div>
+  <div>
+    <label for="email-input">Newsletter</label>
+    <div>
+      <input id="email-input" type="email" placeholder="you@company.com"/>
+      <button class="btn">Subscribe</button>
+    </div>
+  </div>
+  <nav aria-label="Footer">
+    <a href="#platform">Platform</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#customers">Customers</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</footer>
+
+<script>
+// Features data
+const features = [
+  {title:'AI Agents',description:'Deploy resilient autonomous agents with guarded tools, memory, and escalation paths.',icon:'✦',stat:'24/7',accent:'#8b5cf6'},
+  {title:'Workflow Automation',description:'Orchestrate approvals, handoffs, and data syncs across every business system.',icon:'⟲',stat:'18k',accent:'#06b6d4'},
+  {title:'Predictive Analytics',description:'Forecast demand, risk, and operational drift with real-time models.',icon:'⌁',stat:'94%',accent:'#22c55e'},
+  {title:'Enterprise Security',description:'Zero-trust controls, audit trails, SSO, SCIM, and policy-aware execution.',icon:'◇',stat:'SOC2',accent:'#f59e0b'},
+  {title:'Knowledge Engine',description:'Unify documents, warehouses, tickets, and CRM context into one reasoning layer.',icon:'◈',stat:'4.8B',accent:'#ec4899'},
+  {title:'Smart Integrations',description:'Native connectors and typed actions for the tools your teams already use.',icon:'⇄',stat:'120+',accent:'#60a5fa'},
+  {title:'Live Dashboards',description:'Observe agents, workflows, and business KPIs from an executive cockpit.',icon:'▣',stat:'<80ms',accent:'#a78bfa'},
+  {title:'Natural Language Commands',description:'Let operators ask, instruct, and govern automation with plain language.',icon:'⌘',stat:'12x',accent:'#14b8a6'}
+];
+
+const spanClass = ['card-1','','card-3','','card-5','','',''];
+
+// Build bento grid
+const bento = document.getElementById('bento-grid');
+features.forEach((f, i) => {
+  const btn = document.createElement('button');
+  btn.className = `bento-card card-${i+1} ${spanClass[i] || ''}`;
+  btn.style.setProperty('--accent', f.accent);
+  btn.innerHTML = `<span>${f.icon}</span><h3>${f.title}</h3><p>${f.description}</p><strong>${f.stat}</strong>`;
+  btn.addEventListener('mouseenter', () => {
+    document.querySelectorAll('.bento-card').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+  });
+  bento.appendChild(btn);
+});
+
+// Build accordion
+const accordion = document.getElementById('accordion-grid');
+let activeIdx = 0;
+features.forEach((f, i) => {
+  const art = document.createElement('article');
+  art.className = 'acc-item';
+  art.innerHTML = `<button aria-expanded="${i===0}"><span>${f.icon} ${f.title}</span><b>${f.stat}</b></button><div class="acc-panel" ${i!==0?'hidden':''}><p>${f.description}</p></div>`;
+  art.querySelector('button').addEventListener('click', () => {
+    accordion.querySelectorAll('.acc-item').forEach((a, j) => {
+      const panel = a.querySelector('.acc-panel');
+      const btn = a.querySelector('button');
+      if (j === i) {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !open);
+        open ? panel.setAttribute('hidden','') : panel.removeAttribute('hidden');
+      } else {
+        btn.setAttribute('aria-expanded','false');
+        panel.setAttribute('hidden','');
+      }
+    });
+  });
+  accordion.appendChild(art);
+});
+
+// Pricing
+const pricingMatrix = {
+  currencies: { USD:{symbol:'$',locale:'en-US'}, EUR:{symbol:'€',locale:'de-DE'}, INR:{symbol:'₹',locale:'en-IN'} },
+  annualDiscount: .2,
+  plans: [
+    {key:'starter',name:'Starter',baseMonthly:{USD:79,EUR:75,INR:6499},seats:'5 seats',cta:'Start building',features:['Agent builder','10 workflows','Core integrations','Community support']},
+    {key:'professional',name:'Professional',baseMonthly:{USD:249,EUR:229,INR:19999},seats:'25 seats',cta:'Scale operations',featured:true,features:['Unlimited agents','Advanced analytics','SSO','Priority support']},
+    {key:'enterprise',name:'Enterprise',baseMonthly:{USD:null,EUR:null,INR:null},seats:'Custom seats',cta:'Contact sales',features:['Dedicated VPC','Custom models','SCIM + audit logs','24/7 solutions team']}
+  ]
+};
+
+let currentCurrency = 'USD';
+let currentBilling = 'annual';
+
+function formatPlanPrice(plan, currency, billing) {
+  const value = plan.baseMonthly[currency];
+  if (value === null) return 'Custom';
+  const adjusted = billing === 'annual' ? value * (1 - pricingMatrix.annualDiscount) : value;
+  return new Intl.NumberFormat(pricingMatrix.currencies[currency].locale, {style:'currency',currency,maximumFractionDigits:0}).format(adjusted);
+}
+
+function renderPlans() {
+  const grid = document.getElementById('plans-grid');
+  grid.innerHTML = '';
+  pricingMatrix.plans.forEach(p => {
+    const art = document.createElement('article');
+    art.className = `plan${p.featured?' featured':''}`;
+    const price = formatPlanPrice(p, currentCurrency, currentBilling);
+    const annualNote = currentBilling === 'annual' && p.baseMonthly[currentCurrency] !== null ? 'billed annually' : '';
+    art.innerHTML = `
+      <h3>${p.name}</h3>
+      <p>${p.seats}</p>
+      <span class="price">${price}</span>
+      <small>/ month ${annualNote}</small>
+      <ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <a class="btn primary" href="#footer">${p.cta}</a>
+    `;
+    grid.appendChild(art);
+  });
+}
+
+function setBilling(type) {
+  currentBilling = type;
+  document.getElementById('monthly-btn').classList.toggle('on', type==='monthly');
+  document.getElementById('annual-btn').classList.toggle('on', type==='annual');
+  renderPlans();
+}
+
+document.getElementById('currency-select').addEventListener('change', e => {
+  currentCurrency = e.target.value;
+  renderPlans();
+});
+
+renderPlans();
+
+// Pointer glow on hero
+const hero = document.querySelector('.hero');
+hero.addEventListener('mousemove', e => {
+  const rect = hero.getBoundingClientRect();
+  hero.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+  hero.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+});
+</script>
+</body>
+</html>
